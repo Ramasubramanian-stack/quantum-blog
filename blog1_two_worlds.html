@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Two Worlds: Classical and Quantum</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --ink: #191919;
+    --ink-light: #6B6B6B;
+    --accent: #4B3FC4;
+    --accent-soft: #EEF0FF;
+    --teal: #1D9E75;
+    --teal-soft: #E6F5F0;
+    --border: #E8E8E8;
+    --bg: #FAFAF8;
+    --card: #FFFFFF;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 20px;
+    line-height: 1.78;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 60px 24px 100px;
+  }
+
+  /* Series tag */
+  .series-tag {
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .series-tag::after {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 32px;
+    background: var(--accent);
+    opacity: 0.4;
+  }
+
+  h1 {
+    font-family: 'Lora', serif;
+    font-size: clamp(34px, 5vw, 48px);
+    font-weight: 600;
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 18px;
+  }
+
+  .subtitle {
+    font-size: 20px;
+    color: var(--ink-light);
+    font-style: italic;
+    font-family: 'Lora', serif;
+    font-weight: 400;
+    margin-bottom: 36px;
+    line-height: 1.55;
+  }
+
+  .byline {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+  .avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent) 0%, #9B55D4 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Lora', serif;
+    font-weight: 600;
+    color: white;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .byline-text { font-size: 14px; color: var(--ink-light); font-family: 'Lora', serif; }
+  .byline-name { font-weight: 600; color: var(--ink); font-size: 15px; display: block; }
+
+  /* Opening pull quote */
+  .opening {
+    font-family: 'Lora', serif;
+    font-size: 23px;
+    font-style: italic;
+    line-height: 1.55;
+    color: var(--ink);
+    border-left: 3px solid var(--accent);
+    padding-left: 24px;
+    margin: 0 0 40px;
+  }
+
+  p {
+    margin-bottom: 28px;
+  }
+
+  h2 {
+    font-family: 'Lora', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 52px 0 20px;
+    line-height: 1.3;
+  }
+
+  h3 {
+    font-family: 'Lora', serif;
+    font-size: 20px;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--ink-light);
+    margin: 36px 0 14px;
+  }
+
+  em { font-style: italic; }
+  strong { font-weight: 600; }
+
+  /* Pull quote */
+  .pull-quote {
+    font-family: 'Lora', serif;
+    font-size: 22px;
+    font-style: italic;
+    line-height: 1.5;
+    text-align: center;
+    color: var(--ink);
+    padding: 36px 32px;
+    margin: 48px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Animation card */
+  .anim-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 8px 8px 20px;
+    margin: 44px 0;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+  }
+  .anim-label {
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    text-align: center;
+    padding: 14px 0 4px;
+  }
+
+  /* Animation styles - classical */
+  @keyframes fly {
+    0%   { cx: 80;  cy: 170; }
+    100% { cx: 590; cy: 170; }
+  }
+  @keyframes drawPath {
+    from { stroke-dashoffset: 600; }
+    to   { stroke-dashoffset: 0; }
+  }
+  @keyframes fadeInEl { from { opacity:0; } to { opacity:1; } }
+  #ball { animation: fly 2.6s cubic-bezier(.4,0,.6,1) infinite; }
+  #traj { stroke-dasharray: 600; animation: drawPath 2.6s cubic-bezier(.4,0,.6,1) infinite; }
+  #hitlabel { animation: fadeInEl 0.4s 2.3s both; }
+
+  /* Animation styles - quantum */
+  @keyframes pulse  { 0%,100%{r:38;opacity:0.10} 50%{r:52;opacity:0.04} }
+  @keyframes pulse2 { 0%,100%{r:24;opacity:0.18} 50%{r:34;opacity:0.10} }
+  @keyframes pulse3 { 0%,100%{r:12;opacity:0.35} 50%{r:18;opacity:0.20} }
+  @keyframes drift  { 0%{transform:translate(0,0)} 25%{transform:translate(6px,-4px)} 50%{transform:translate(-4px,5px)} 75%{transform:translate(5px,3px)} 100%{transform:translate(0,0)} }
+  @media (prefers-reduced-motion: no-preference) {
+    .pr1{animation:pulse 2.2s ease-in-out infinite;}
+    .pr2{animation:pulse2 1.8s ease-in-out infinite 0.3s;}
+    .pr3{animation:pulse3 1.5s ease-in-out infinite 0.6s;}
+    .drifter{animation:drift 3s ease-in-out infinite;}
+  }
+  .obtn {
+    padding: 9px 28px;
+    border: 1px solid #D0CCEE;
+    background: transparent;
+    color: var(--accent);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: 'Lora', serif;
+    font-weight: 600;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .obtn:hover { background: var(--accent-soft); }
+
+  /* SVG shared text style */
+  .ts { font-family: 'Lora', Georgia, serif; font-size: 12.5px; fill: #555; }
+
+  /* Key difference box */
+  .key-box {
+    background: var(--accent-soft);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    padding: 24px 28px;
+    margin: 44px 0;
+  }
+  .key-box-title {
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .key-box p {
+    margin-bottom: 10px;
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+  .key-box p:last-child { margin-bottom: 0; }
+
+  /* Next blog teaser */
+  .next-card {
+    background: linear-gradient(135deg, #F7F6FF 0%, #EEF5FF 100%);
+    border: 1px solid #D8D4F5;
+    border-radius: 16px;
+    padding: 32px 36px;
+    margin-top: 64px;
+  }
+  .next-card-eyebrow {
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .next-card h3 {
+    font-family: 'Lora', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 0 0 10px;
+    font-style: normal;
+  }
+  .next-card p {
+    font-size: 16px;
+    color: var(--ink-light);
+    margin-bottom: 0;
+    line-height: 1.6;
+  }
+
+  /* Divider */
+  .divider {
+    width: 48px;
+    height: 3px;
+    background: var(--accent);
+    margin: 56px auto;
+    opacity: 0.3;
+    border-radius: 99px;
+  }
+
+  /* Teal color for classical SVG */
+  .c-teal { fill: var(--teal-soft); stroke: var(--teal); }
+  .c-purple { fill: var(--accent-soft); stroke: var(--accent); }
+
+  @media (max-width: 600px) {
+    body { font-size: 18px; }
+    .container { padding: 40px 18px 80px; }
+    h1 { font-size: 32px; }
+    .pull-quote { font-size: 19px; padding: 28px 16px; }
+    .opening { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="series-tag">Quantum From Zero · Blog 1 of N</div>
+
+  <h1>The Two Worlds: Classical and Quantum</h1>
+
+  <p class="subtitle">A series where I explain quantum mechanics from the ground up - the way I wish someone had shown me. Each blog builds on the last. By the end, we reach quantum computing. Let's begin.</p>
+
+  <div class="byline">
+    <div class="avatar">R</div>
+    <div class="byline-text">
+      <span class="byline-name">Ram</span>
+      8 min read · Quantum Computing Series
+    </div>
+  </div>
+
+  <p class="opening">"If you think you understand quantum mechanics, you don't understand quantum mechanics." - Richard Feynman</p>
+
+  <p>That quote is not an insult. It is a warning - and an invitation. Quantum mechanics is the most precisely tested theory in all of science. And yet, it describes a reality so strange that even the people who invented it spent their lives arguing about what it <em>means</em>.</p>
+
+  <p>You don't need to understand it completely. Nobody does. But you can understand it deeply enough to feel the ground shift beneath your feet - to see why quantum computers are not just faster machines, but a fundamentally different kind of thinking.</p>
+
+  <p>That journey begins here, with two worlds.</p>
+
+  <h2>The World You Know</h2>
+
+  <p>Throw a cricket ball. Before it even lands, a physicist can calculate exactly where it will go. The angle, the speed, the arc - everything. Not approximately but Exactly.</p>
+
+  <p>This is the classical world. The world of cars, planets, bridges, and cricket balls.</p>
+
+  <div class="anim-card">
+    <div class="anim-label">Classical World - One Definite Path</div>
+    <svg width="100%" viewBox="0 0 680 220" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+      <line x1="40" y1="185" x2="640" y2="185" stroke="#E0E0E0" stroke-width="1"/>
+      <path id="traj" d="M80 170 Q335 60 590 170" fill="none" stroke="#1D9E75" stroke-width="2" stroke-dasharray="8 4" opacity="0.6"/>
+      <g class="c-teal"><circle id="ball" r="14" stroke-width="0.5"/></g>
+      <g class="c-teal">
+        <rect x="42" y="148" width="60" height="30" rx="6" stroke-width="0.5"/>
+        <text class="ts" x="72" y="163" text-anchor="middle" dominant-baseline="central" fill="#1D9E75">throw</text>
+      </g>
+      <g id="hitlabel" class="c-teal">
+        <rect x="564" y="148" width="50" height="30" rx="6" stroke-width="0.5"/>
+        <text class="ts" x="589" y="163" text-anchor="middle" dominant-baseline="central" fill="#1D9E75">lands</text>
+      </g>
+      <text class="ts" x="340" y="46" text-anchor="middle" fill="#1D9E75">predicted path - always the same</text>
+      <text class="ts" x="340" y="208" text-anchor="middle">Classical world: one definite path, always predictable</text>
+    </svg>
+  </div>
+
+  <p>The ball takes one path and with different force it might land at different position but the intuition is, it has some position and can be measured. This is the classical world - beautiful in its certainty.</p>
+
+  <h2>Now Zoom In</h2>
+
+  <p>Shrink yourself. Not to the size of a grain of sand. Not even a cell. Keep going - past molecules, past atoms - all the way down to a single electron. A particle so incomprehensibly small that billions of them sit inside the full stop at the end of this sentence.</p>
+
+  <p>At this scale, everything you just learned breaks.</p>
+
+  <p>The electron does not have a position. It is not hiding in one spot, waiting for you to find it. Before you measure it, it exists as a <strong>blur of possibilities</strong> - a cloud of probability smeared across space. It is not in one place. It is, in a very real sense, <em>in all its possible places at once</em>.</p>
+
+  <p>Physicists call this <strong>superposition</strong>.</p>
+
+  <div class="pull-quote">
+    Imagine flipping a coin. Before you look, I mean in the air it is neither heads nor tails - it is <em>both</em>, which means the probability of head and tail is equal. The moment it lands on a surface, it snaps into one. That is not a metaphor. That is quantum mechanics.
+  </div>
+
+  <p>The particle doesn't "decide" where it is until something interacts with it (in this the surface) - until you <em>measure</em> it. Before the measurement, asking "where is the electron?" is like asking "which side is the coin on?" before it has landed. The question has no answer. Not because we lack good enough instruments. Because nature itself hasn't made up its mind yet.</p>
+
+  <div class="anim-card">
+    <div class="anim-label">Quantum World - A Cloud of Possibilities</div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:0.5rem 0 0.5rem">
+      <svg id="qsvg" width="100%" viewBox="0 0 680 240" xmlns="http://www.w3.org/2000/svg">
+        <text id="statelabel" class="ts" x="340" y="30" text-anchor="middle">before observation - the particle exists everywhere at once</text>
+        <g id="superstate">
+          <circle class="pr1" cx="340" cy="130" r="38" fill="#7F77DD" stroke="none"/>
+          <circle class="pr2" cx="340" cy="130" r="24" fill="#7F77DD" stroke="none"/>
+          <circle class="pr3" cx="340" cy="130" r="12" fill="#7F77DD" stroke="none"/>
+          <g class="drifter" style="transform-origin:340px 130px">
+            <g class="c-purple"><circle cx="340" cy="130" r="8" stroke-width="0.5"/></g>
+          </g>
+          <text class="ts" x="340" y="200" text-anchor="middle" fill="#534AB7">probability cloud - particle could be anywhere in this blur</text>
+        </g>
+        <g id="collapsed" style="display:none">
+          <g class="c-purple"><circle cx="340" cy="130" r="10" stroke-width="0.5"/></g>
+          <line x1="340" y1="120" x2="340" y2="60" stroke="#534AB7" stroke-width="0.5" stroke-dasharray="4 3"/>
+          <line x1="200" y1="130" x2="330" y2="130" stroke="#534AB7" stroke-width="0.5" stroke-dasharray="4 3"/>
+          <text class="ts" x="340" y="54" text-anchor="middle" fill="#534AB7">exact position - locked in</text>
+          <text class="ts" x="188" y="134" text-anchor="end" fill="#534AB7">x, y known</text>
+          <text class="ts" x="340" y="200" text-anchor="middle">the act of measuring collapses the blur into one definite point</text>
+        </g>
+      </svg>
+      <div style="display:flex;gap:12px">
+        <button class="obtn" id="obsBtn" onclick="observe()">Observe the particle</button>
+        <button class="obtn" id="rstBtn" style="display:none" onclick="reset()">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <p>Before you observe: the particle is a blur - a cloud of probabilities with no single location. Press the button. The blur collapses instantly into one sharp point. It chose. Or rather, <em>the act of measuring forced it to choose</em>.</p>
+
+  <p>This is called <strong>wavefunction collapse</strong> - and it is one of the most debated, most mysterious, most beautiful things in all of physics. Einstein hated it. Bohr insisted it was real. The argument was never fully resolved. And yet, every single experiment has confirmed: this is what happens.</p>
+
+  <p>Nature at the quantum scale is irreducibly probabilistic. Not because we're not smart enough to track it. Because that is the nature of reality.</p>
+
+  <div class="key-box">
+    <div class="key-box-title">The Key Difference</div>
+    <p><strong>Classical world</strong> - objects have definite positions and states whether or not you observe them. The moon is there even when nobody looks.</p>
+    <p><strong>Quantum world</strong> - particles exist in superpositions of many states at once. Once you observe it means you are measuring. Measuring something <em>changes</em> it.</p>
+  </div>
+
+  <h2>So What Does This Have to Do With Computers?</h2>
+
+  <p>Every computer you've ever used - your phone, your laptop, the servers behind Google - stores and processes information as <strong>bits</strong>. A bit is exactly one thing: 0 or 1. Off or on. Like a light switch. It is never both.</p>
+
+  <p>A quantum computer uses <strong>qubits</strong>.</p>
+
+  <p>A qubit - like our electron, like our magic coin - can be 0, 1, or <em>both 0 and 1 at the same time</em>, before you measure it. It lives in superposition. And because of this, a quantum computer doesn't try paths one at a time. It explores many paths simultaneously - all at once, in parallel, using the strange mathematics of quantum mechanics itself as the engine.</p>
+
+  <p>Two qubits can be in 4 states simultaneously. Ten qubits: 1,024 states. Three hundred qubits: more states than there are atoms in the observable universe. All explored at once.</p>
+
+  <p>This is not faster computing. This is a different <em>kind</em> of computing.</p>
+
+  <div class="divider"></div>
+
+  <p>You have just taken the first step. You now understand the essential strangeness that makes quantum computing possible - not as a magic trick, but as a direct consequence of how the universe behaves at its smallest scales.</p>
+
+  <p>The classical world is predictable because everything has a definite state. The quantum world is powerful precisely <em>because</em> it doesn't - not until you look.</p>
+
+  <div class="next-card">
+    <div class="next-card-eyebrow">Coming next · Blog 2</div>
+    <h3>What Is a Qubit, Really?</h3>
+    <p>We go inside the qubit. What it physically is, how it holds superposition, and the first real concept.</p>
+  </div>
+
+</div>
+
+<script>
+function observe(){
+  document.getElementById('superstate').style.display='none';
+  document.getElementById('collapsed').style.display='';
+  document.getElementById('statelabel').textContent='after observation - the blur collapses to one point';
+  document.getElementById('obsBtn').style.display='none';
+  document.getElementById('rstBtn').style.display='';
+}
+function reset(){
+  document.getElementById('superstate').style.display='';
+  document.getElementById('collapsed').style.display='none';
+  document.getElementById('statelabel').textContent='before observation - the particle exists everywhere at once';
+  document.getElementById('obsBtn').style.display='';
+  document.getElementById('rstBtn').style.display='none';
+}
+</script>
+</body>
+</html>
