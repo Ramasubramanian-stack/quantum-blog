@@ -92,7 +92,7 @@ There are different types of qubits used in real labs:
 Tiny electrical circuits cooled near absolute zero  
 (built using Josephson junctions)
 
-![Qubit in chip](./images/superconducting.png)
+![superconducting_qubit](./images/superconducting.png)
 
 ---
 
